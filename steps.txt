@@ -1,0 +1,76 @@
+1. Create project employee_project
+
+2.run command-  python manage.py runsserver
+
+3. Create App- python manage.py startapp employee_register(app folder)
+
+4. mention created application in settings.py file of Main project folder i.e employee_project under INSTALLED_APPS
+
+5. Open pgAdmin Create database as EmployeeDB
+
+6.Mention created database in settings.py file
+	DATABASES = {
+    		'default': {
+      		  'ENGINE': 'django.db.backends.postgresql',
+       		 'NAME': 'EmployeeDB',   
+      		  'USER': 'postgres',
+    	 	   'PASSWORD': 'admin',
+     	 	  'HOST':'localhost',
+  		  }
+		}
+
+7. run python manage.py migrate
+
+8. models.py- create two models employee and position
+class Position(models.Model):
+    title=models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
+    
+class Employee(models.Model):
+    fullname= models.CharField(max_length=50)
+    emp_code=models.CharField(max_length=10)
+    mobile=models.CharField(max_length=10)
+    position=models.ForeignKey(Position,on_delete=models.CASCADE)
+
+9. go to terminal and run following command-
+	python manage.py makemigrations employee_register // (app name)
+	python manage.py sqlmigrate employee_register 0001
+	python manage.py migrate
+
+
+10. go to pgAdmin refresh the tables - two tables will be created employee_reister_employee and employee_register_position
+
+11. views.py
+define view function to retrive and display
+def employee_list()
+def employee_form()
+def employee_delete()
+
+11.create urls.py file in app folder
+
+12.mention that file in urls.py of project folder under urlpatterns
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('employee/',include('employee_register.urls')),
+]
+13.create routes in urls.py of app folder
+from django.urls import path,include
+from .import views
+
+urlpatterns = [
+    path('',views.employee_form,name='employee_insert'),
+    path('<int:id>/',views.employee_form,name='employee_update'),
+    path('list/',views.employee_list,name='employee_list'),
+    path('delete/<int:id>/',views.employee_delete,name='employee_delete'),
+]
+
+14.create templates folder inside app folder 
+
+15.create one more folder inside template folder same name as app folder
+
+16.create three files base.html, employee_form.html, employee_list.html
+
+
+
