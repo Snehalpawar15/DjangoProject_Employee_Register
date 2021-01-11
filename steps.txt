@@ -1,6 +1,6 @@
 1. Create project employee_project
 
-2.run command-  python manage.py runsserver
+2.run command-  python manage.py runserver
 
 3. Create App- python manage.py startapp employee_register(app folder)
 
